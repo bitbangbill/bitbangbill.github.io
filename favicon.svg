@@ -2,7 +2,7 @@
   <style>
     rect { fill: #0a7d4f; }
     path { stroke: #ffffff; }
-    @media (prefers-color-scheme: dark) { rect { fill: #3ee08f; } path { stroke: #06120c; } }
+    @media (prefers-color-scheme: dark) { rect { fill: #5fbf8f; } path { stroke: #06120c; } }
   </style>
   <rect width="32" height="32" rx="7"/>
   <path d="M4 21h5V11h5v10h5V11h5v10h4" fill="none" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>

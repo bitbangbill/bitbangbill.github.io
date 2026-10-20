@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bit-Banged Protocol Library — BitBangBill</title>
+  <meta name="description" content="A portable C library that implements I²C, SPI, and 1-Wire on plain GPIO, with cycle-accurate timing on Cortex-M0+ and logic-analyzer verified waveforms.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f6f7f4" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0d1210" media="(prefers-color-scheme: dark)">
+  <link rel="canonical" href="https://bitbangbill.dev/projects/bitbang-protocols.html">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Bit-Banged Protocol Library">
+  <meta property="og:url" content="https://bitbangbill.dev/projects/bitbang-protocols.html">
+
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("theme");
+        if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <script src="../assets/js/main.js" defer></script>
+  <script src="../assets/js/project.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <nav class="nav container" aria-label="Primary">
+      <a class="brand" href="../index.html" aria-label="BitBangBill home">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M2 22h6V10h6v12h6V10h6v12h4" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+        </svg>
+        <span>bitbang<span class="accent">bill</span></span>
+      </a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="../index.html#about">About</a></li>
+        <li><a href="../index.html#blog">Blog</a></li>
+        <li><a href="../index.html#projects">Projects</a></li>
+        <li><a href="../index.html#experience">Experience</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+        <li>
+          <button class="theme-toggle" type="button" aria-label="Theme: system" title="Theme: system">
+            <svg class="icon icon-auto" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"/></svg>
+            <svg class="icon icon-light" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            <svg class="icon icon-dark" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+            <span class="theme-label">Auto</span>
+          </button>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main">
+    <div class="project-page container">
+      <a class="post-back mono" href="../index.html#projects">← All projects</a>
+
+      <header class="post-header">
+        <h1>Bit-Banged Protocol Library</h1>
+        <p class="mono">Embedded · 2024</p>
+        <p class="lede">A portable C library that implements I²C, SPI, and 1-Wire on plain GPIO, with cycle-accurate timing on Cortex-M0+ and logic-analyzer verified waveforms.</p>
+      </header>
+
+      <div class="project-layout">
+        <div class="project-main">
+          <section aria-labelledby="overview">
+            <h2 class="block-title" id="overview">Overview</h2>
+            <p>Sometimes the hardware peripheral is busy, broken, or on the wrong pins. This library drives the protocols in software with only three functions to port: set pin, read pin, and delay.</p>
+            <p>Timing is verified against each protocol&#x27;s spec with a logic analyzer, and the protocol logic is unit-tested on the host with a simulated bus.</p>
+            <table class="specs">
+              <tbody>
+                <tr><th scope="row">Language</th><td>C99</td></tr>
+                <tr><th scope="row">Protocols</th><td>I²C, SPI (modes 0–3), 1-Wire</td></tr>
+                <tr><th scope="row">Targets</th><td>Cortex-M0+, Cortex-M4</td></tr>
+                <tr><th scope="row">Port layer</th><td>3 functions</td></tr>
+                <tr><th scope="row">Tests</th><td>Host-side, simulated bus</td></tr>
+              </tbody>
+            </table>
+          </section>
+
+          <section aria-labelledby="gallery">
+            <h2 class="block-title" id="gallery">Gallery</h2>
+            <!-- Put photos in /assets/img/bitbang-protocols/ and point each href and src at them. -->
+            <ul class="gallery">
+              <li><a href="../assets/img/placeholder-photo.svg"><figure><img src="../assets/img/placeholder-photo.svg" alt="I²C capture on the logic analyzer" loading="lazy" width="800" height="600"><figcaption>I²C capture on the logic analyzer</figcaption></figure></a></li>
+              <li><a href="../assets/img/placeholder-photo.svg"><figure><img src="../assets/img/placeholder-photo.svg" alt="1-Wire reset pulse" loading="lazy" width="800" height="600"><figcaption>1-Wire reset pulse</figcaption></figure></a></li>
+              <li><a href="../assets/img/placeholder-photo.svg"><figure><img src="../assets/img/placeholder-photo.svg" alt="Test fixture" loading="lazy" width="800" height="600"><figcaption>Test fixture</figcaption></figure></a></li>
+              <li><a href="../assets/img/placeholder-photo.svg"><figure><img src="../assets/img/placeholder-photo.svg" alt="SPI mode 3 timing" loading="lazy" width="800" height="600"><figcaption>SPI mode 3 timing</figcaption></figure></a></li>
+            </ul>
+          </section>
+
+          <section aria-labelledby="updates">
+            <h2 class="block-title" id="updates">Updates</h2>
+            <!-- Newest first. -->
+            <ol class="updates">
+              <li><time class="mono" datetime="2024-12-01">2024-12-01</time><div><h3>1-Wire support</h3><p>Added 1-Wire with overdrive mode, tested against a DS18B20.</p></div></li>
+              <li><time class="mono" datetime="2024-09-15">2024-09-15</time><div><h3>First release</h3><p>I²C and SPI, with host-side unit tests.</p></div></li>
+            </ol>
+          </section>
+        </div>
+
+        <!-- Commits on main, fetched from the GitHub API. Change data-repo to the project's repository. -->
+        <aside class="card commits" data-repo="bitbangbill/bitbang-protocols" data-branch="main" aria-labelledby="commits-title">
+          <div class="commits-head">
+            <h2 id="commits-title">Commits on main</h2>
+            <a class="mono" href="https://github.com/bitbangbill/bitbang-protocols" target="_blank" rel="noopener">bitbangbill/bitbang-protocols</a>
+          </div>
+          <p class="commit-status">Loading commits…</p>
+          <div class="commit-list"></div>
+          <a class="commits-foot" href="https://github.com/bitbangbill/bitbang-protocols/commits/main" target="_blank" rel="noopener">View all commits on GitHub →</a>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <dialog class="lightbox" aria-label="Gallery image">
+    <img src="" alt="">
+    <div class="lightbox-bar">
+      <button class="lightbox-prev" type="button">← Prev</button>
+      <span class="lightbox-caption"></span>
+      <button class="lightbox-next" type="button">Next →</button>
+      <button class="lightbox-close" type="button">Close</button>
+    </div>
+  </dialog>
+
+  <footer class="site-footer">
+    <div class="container mono">
+      <span>© <span id="year">2026</span> bitbangbill.dev</span>
+      <span class="muted">Hosted on GitHub Pages</span>
+      <span class="muted site-credit">This website was designed using <a href="https://claude.ai" target="_blank" rel="noopener">Claude</a> by Anthropic.</span>
+    </div>
+  </footer>
+</body>
+</html>
