@@ -286,6 +286,7 @@ img, svg { display: block; max-width: 100%; }
    ============================================================ */
 .site-footer { border-top: 1px solid var(--border); padding: 1.5rem 0; font-size: 0.85rem; }
 .site-footer .container { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem; }
+.site-credit { flex-basis: 100%; }
 
 /* ============================================================
    Motion preferences
