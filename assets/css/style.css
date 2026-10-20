@@ -288,8 +288,13 @@ img, svg { display: block; max-width: 100%; }
 .chip:hover { color: var(--text); border-color: var(--accent); }
 .chip.is-active { background: var(--accent); color: var(--accent-contrast); border-color: var(--accent); }
 
-.project { padding: 0; overflow: hidden; display: flex; flex-direction: column; }
+.project { position: relative; padding: 0; overflow: hidden; display: flex; flex-direction: column; }
 .project:hover { border-color: var(--accent); }
+/* The title link covers the whole card; other links sit above it. */
+.card-link { color: var(--text); text-decoration: none; }
+.card-link::after { content: ""; position: absolute; inset: 0; }
+.project:hover .card-link { color: var(--accent); }
+.project .links a { position: relative; z-index: 1; }
 .project[hidden] { display: none; }
 .project-media { background: var(--bg-alt); border-bottom: 1px solid var(--border); padding: 0.75rem; }
 .project-media svg { width: 100%; height: 130px; }
@@ -309,6 +314,75 @@ img, svg { display: block; max-width: 100%; }
 .sym { fill: var(--text); font: 600 14px ui-monospace, monospace; }
 .bits path { fill: none; stroke: var(--trace); stroke-width: 2.5; stroke-linejoin: round; }
 .bits path + path { stroke: var(--copper); }
+
+/* ---------- Project page ---------- */
+.project-page { padding-top: 3rem; padding-bottom: 5rem; }
+.project-page .post-header { margin-bottom: 2rem; }
+.project-page .post-header .lede { margin: 1rem 0 0; font-size: 1.1rem; max-width: 44rem; }
+.project-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 3rem; }
+@media (min-width: 960px) {
+  .project-layout { grid-template-columns: minmax(0, 1fr) 360px; align-items: start; }
+}
+.project-main > section + section { margin-top: 3rem; }
+.block-title {
+  font-size: 1.35rem; padding-top: 0.6rem; border-top: 2px solid var(--text);
+  margin-bottom: 1.25rem;
+}
+
+.specs { width: 100%; border-collapse: collapse; margin-top: 1.5rem; font-size: 0.92rem; }
+.specs th, .specs td { text-align: left; padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--border); }
+.specs th { width: 40%; color: var(--muted); font-weight: 400; }
+.specs td { font-family: ui-monospace, "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace; }
+
+.gallery { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.75rem; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+.gallery a { display: block; color: var(--text); text-decoration: none; background: var(--surface); border: 1px solid var(--border); }
+.gallery a:hover { border-color: var(--accent); }
+.gallery img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; border-bottom: 1px solid var(--border); }
+.gallery figure { margin: 0; }
+.gallery figcaption { padding: 0.5rem 0.65rem; font-size: 0.82rem; color: var(--muted); }
+
+.updates { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--border); }
+.updates li { display: grid; grid-template-columns: 7.5rem 1fr; gap: 0.25rem 1.5rem; padding: 1rem 0; border-bottom: 1px solid var(--border); }
+.updates time { font-size: 0.85rem; color: var(--muted); padding-top: 0.15rem; }
+.updates h3 { font-size: 1.05rem; margin-bottom: 0.3rem; }
+.updates p { margin: 0; color: var(--muted); font-size: 0.95rem; }
+@media (max-width: 640px) { .updates li { grid-template-columns: 1fr; } }
+
+/* Commit graph sidebar */
+.commits { padding: 0; }
+@media (min-width: 960px) {
+  .commits { position: sticky; top: 88px; max-height: calc(100vh - 110px); display: flex; flex-direction: column; }
+}
+.commits-head { padding: 1rem 1.1rem 0.85rem; border-bottom: 1px solid var(--border); }
+.commits-head h2 { font-size: 1rem; margin: 0 0 0.2rem; }
+.commits-head a { font-size: 0.8rem; }
+.commit-status { padding: 1rem 1.1rem; margin: 0; color: var(--muted); font-size: 0.9rem; }
+.commit-list { position: relative; overflow-y: auto; }
+.commit-graph { position: absolute; top: 0; left: 0; }
+.commit-list ol { list-style: none; margin: 0; padding: 0; }
+.commit {
+  display: flex; flex-direction: column; justify-content: center;
+  height: 56px; padding: 0 1.1rem 0 calc(var(--graph-w, 24px) + 0.4rem);
+  color: var(--text); text-decoration: none; border-bottom: 1px solid var(--border);
+}
+.commit:hover { background: var(--bg-alt); }
+.commit:hover .commit-msg { color: var(--accent); }
+.commit-msg { font-size: 0.88rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.commit-meta { font-size: 0.72rem; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.commits-foot { display: block; padding: 0.75rem 1.1rem; font-size: 0.85rem; border-top: 1px solid var(--border); margin-top: -1px; }
+
+/* Lightbox */
+.lightbox { padding: 0; border: 1px solid var(--border); background: var(--surface); color: var(--text); max-width: min(92vw, 1100px); }
+.lightbox::backdrop { background: rgba(0, 0, 0, 0.8); }
+.lightbox img { display: block; max-width: 100%; max-height: 80vh; margin: 0 auto; }
+.lightbox-bar { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem; border-top: 1px solid var(--border); }
+.lightbox-caption { flex: 1; font-size: 0.85rem; color: var(--muted); padding: 0 0.5rem; }
+.lightbox-bar button {
+  font: inherit; font-size: 0.85rem; cursor: pointer;
+  padding: 0.35rem 0.75rem; border-radius: 2px;
+  background: var(--surface); color: var(--text); border: 1px solid var(--border);
+}
+.lightbox-bar button:hover { border-color: var(--accent); }
 
 /* ---------- Timeline ---------- */
 .timeline { list-style: none; margin: 0; padding: 0 0 0 1.5rem; border-left: 2px solid var(--border); }

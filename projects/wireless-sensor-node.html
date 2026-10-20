@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wireless Sensor Node — BitBangBill</title>
+  <meta name="description" content="Low-power 4-layer board built around an ESP32-C3 with an environmental sensor suite. It sleeps at 8 µA and runs over a year on a single 18650.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f6f7f4" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0d1210" media="(prefers-color-scheme: dark)">
+  <link rel="canonical" href="https://bitbangbill.dev/projects/wireless-sensor-node.html">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Wireless Sensor Node">
+  <meta property="og:url" content="https://bitbangbill.dev/projects/wireless-sensor-node.html">
+
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("theme");
+        if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <script src="/assets/js/main.js" defer></script>
+  <script src="/assets/js/project.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <nav class="nav container" aria-label="Primary">
+      <a class="brand" href="/" aria-label="BitBangBill home">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M2 22h6V10h6v12h6V10h6v12h4" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+        </svg>
+        <span>bitbang<span class="accent">bill</span></span>
+      </a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="/#about">About</a></li>
+        <li><a href="/#blog">Blog</a></li>
+        <li><a href="/#projects">Projects</a></li>
+        <li><a href="/#experience">Experience</a></li>
+        <li><a href="/#contact">Contact</a></li>
+        <li>
+          <button class="theme-toggle" type="button" aria-label="Theme: system" title="Theme: system">
+            <svg class="icon icon-auto" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"/></svg>
+            <svg class="icon icon-light" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            <svg class="icon icon-dark" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+            <span class="theme-label">Auto</span>
+          </button>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main">
+    <div class="project-page container">
+      <a class="post-back mono" href="/#projects">← All projects</a>
+
+      <header class="post-header">
+        <h1>Wireless Sensor Node</h1>
+        <p class="mono">PCB · Embedded · 2026</p>
+        <p class="lede">Low-power 4-layer board built around an ESP32-C3 with an environmental sensor suite. It sleeps at 8 µA and runs over a year on a single 18650.</p>
+      </header>
+
+      <div class="project-layout">
+        <div class="project-main">
+          <section aria-labelledby="overview">
+            <h2 class="block-title" id="overview">Overview</h2>
+            <p>The goal was a sensor node I could leave in the garden for a year without touching it. Everything else followed from the power budget: the radio is off except for a short burst every five minutes, and every rail can be switched off.</p>
+            <p>The board is 4 layers with a solid ground plane under the RF section. Firmware is ESP-IDF with deep sleep between readings.</p>
+            <table class="specs">
+              <tbody>
+                <tr><th scope="row">MCU</th><td>ESP32-C3</td></tr>
+                <tr><th scope="row">Layers</th><td>4</td></tr>
+                <tr><th scope="row">Sleep current</th><td>8 µA</td></tr>
+                <tr><th scope="row">Battery</th><td>1× 18650 Li-ion</td></tr>
+                <tr><th scope="row">Sensors</th><td>BME280, SHT40, ambient light</td></tr>
+                <tr><th scope="row">Tools</th><td>KiCad, ESP-IDF</td></tr>
+              </tbody>
+            </table>
+          </section>
+
+          <section aria-labelledby="gallery">
+            <h2 class="block-title" id="gallery">Gallery</h2>
+            <!-- Put photos in /assets/img/wireless-sensor-node/ and point each href and src at them. -->
+            <ul class="gallery">
+              <li><a href="/assets/img/placeholder-photo.svg"><figure><img src="/assets/img/placeholder-photo.svg" alt="Rev B assembled, top side" loading="lazy" width="800" height="600"><figcaption>Rev B assembled, top side</figcaption></figure></a></li>
+              <li><a href="/assets/img/placeholder-photo.svg"><figure><img src="/assets/img/placeholder-photo.svg" alt="Bottom side" loading="lazy" width="800" height="600"><figcaption>Bottom side</figcaption></figure></a></li>
+              <li><a href="/assets/img/placeholder-photo.svg"><figure><img src="/assets/img/placeholder-photo.svg" alt="Layout in KiCad" loading="lazy" width="800" height="600"><figcaption>Layout in KiCad</figcaption></figure></a></li>
+              <li><a href="/assets/img/placeholder-photo.svg"><figure><img src="/assets/img/placeholder-photo.svg" alt="Sleep current on the DMM" loading="lazy" width="800" height="600"><figcaption>Sleep current on the DMM</figcaption></figure></a></li>
+            </ul>
+          </section>
+
+          <section aria-labelledby="updates">
+            <h2 class="block-title" id="updates">Updates</h2>
+            <!-- Newest first. -->
+            <ol class="updates">
+              <li><time class="mono" datetime="2026-10-02">2026-10-02</time><div><h3>Rev B boards in</h3><p>Fixed the reversed battery-protection FET from Rev A. Sleep current is now 8 µA, down from 31 µA.</p></div></li>
+              <li><time class="mono" datetime="2026-08-19">2026-08-19</time><div><h3>Rev A bring-up</h3><p>Everything works except the battery protection, where the footprint was mirrored. A bodge wire got it running.</p></div></li>
+              <li><time class="mono" datetime="2026-07-05">2026-07-05</time><div><h3>Schematic done</h3><p>Picked the ESP32-C3 for its sleep current and native USB.</p></div></li>
+            </ol>
+          </section>
+        </div>
+
+        <!-- Commits on main, fetched from the GitHub API. Change data-repo to the project's repository. -->
+        <aside class="card commits" data-repo="bitbangbill/wireless-sensor-node" data-branch="main" aria-labelledby="commits-title">
+          <div class="commits-head">
+            <h2 id="commits-title">Commits on main</h2>
+            <a class="mono" href="https://github.com/bitbangbill/wireless-sensor-node" target="_blank" rel="noopener">bitbangbill/wireless-sensor-node</a>
+          </div>
+          <p class="commit-status">Loading commits…</p>
+          <div class="commit-list"></div>
+          <a class="commits-foot" href="https://github.com/bitbangbill/wireless-sensor-node/commits/main" target="_blank" rel="noopener">View all commits on GitHub →</a>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <dialog class="lightbox" aria-label="Gallery image">
+    <img src="" alt="">
+    <div class="lightbox-bar">
+      <button class="lightbox-prev" type="button">← Prev</button>
+      <span class="lightbox-caption"></span>
+      <button class="lightbox-next" type="button">Next →</button>
+      <button class="lightbox-close" type="button">Close</button>
+    </div>
+  </dialog>
+
+  <footer class="site-footer">
+    <div class="container mono">
+      <span>© <span id="year">2026</span> bitbangbill.dev</span>
+      <span class="muted">Hosted on GitHub Pages</span>
+    </div>
+  </footer>
+</body>
+</html>
