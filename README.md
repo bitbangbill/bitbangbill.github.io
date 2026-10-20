@@ -10,6 +10,7 @@ index.html            main page
 404.html              custom not-found page
 assets/css/style.css  styles and theme tokens
 assets/js/main.js     theme toggle, mobile nav, project filters
+blog/                 blog posts (copy an existing post as a template)
 favicon.svg           icon (adapts to light/dark)
 CNAME                 custom domain for GitHub Pages
 .nojekyll             serve files as-is (skip Jekyll)

@@ -227,7 +227,6 @@ img, svg { display: block; max-width: 100%; }
 .status-dot { width: 8px; height: 8px; background: var(--accent); }
 
 .grid { display: grid; gap: 1.25rem; }
-.skills-grid { grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
 .projects-grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); }
 
 .card {
@@ -244,6 +243,40 @@ img, svg { display: block; max-width: 100%; }
   border: 1px solid var(--border); color: var(--text);
 }
 .tags.small li { font-size: 0.7rem; }
+
+/* ---------- Blog ---------- */
+.post-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--border); }
+.post-item {
+  display: grid; grid-template-columns: 7.5rem 1fr auto; gap: 0.25rem 1.5rem; align-items: baseline;
+  padding: 1.25rem 0.75rem; border-bottom: 1px solid var(--border);
+  color: var(--text); text-decoration: none;
+}
+.post-item:hover { background: var(--surface); }
+.post-item:hover .post-title { color: var(--accent); }
+.post-item time { font-size: 0.85rem; color: var(--muted); }
+.post-text { display: flex; flex-direction: column; gap: 0.25rem; }
+.post-title { font-size: 1.15rem; font-weight: 700; letter-spacing: -0.01em; }
+.post-excerpt { color: var(--muted); font-size: 0.97rem; }
+.post-tag { font-size: 0.75rem; padding: 0.15rem 0.5rem; border: 1px solid var(--border); }
+@media (max-width: 640px) {
+  .post-item { grid-template-columns: 1fr auto; }
+  .post-text { grid-column: 1 / -1; grid-row: 2; }
+}
+
+/* Single post page */
+.post { padding-top: 4rem; padding-bottom: 5rem; }
+.post-back { font-size: 0.9rem; text-decoration: none; }
+.post-header { margin: 1.5rem 0 2.5rem; padding-top: 0.9rem; border-top: 2px solid var(--text); }
+.post-header h1 { font-size: clamp(2rem, 5.5vw, 3rem); letter-spacing: -0.03em; }
+.post-header p { color: var(--muted); font-size: 0.9rem; margin: 0; }
+.post-body { max-width: 44rem; }
+.post-body h2 { font-size: 1.5rem; margin-top: 2.25rem; }
+.post-body li { margin-bottom: 0.35rem; }
+.post-body code { font-family: ui-monospace, "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace; font-size: 0.9em; }
+.post-body pre {
+  background: var(--surface); border: 1px solid var(--border);
+  padding: 1rem 1.25rem; overflow-x: auto; font-size: 0.9rem; line-height: 1.5;
+}
 
 /* ---------- Projects ---------- */
 .filters { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }

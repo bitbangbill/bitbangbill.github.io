@@ -44,7 +44,7 @@
       </button>
       <ul class="nav-links" id="nav-links">
         <li><a href="#about">About</a></li>
-        <li><a href="#skills">Skills</a></li>
+        <li><a href="#blog">Blog</a></li>
         <li><a href="#projects">Projects</a></li>
         <li><a href="#experience">Experience</a></li>
         <li><a href="#contact">Contact</a></li>
@@ -111,40 +111,43 @@
       </div>
     </section>
 
-    <!-- SKILLS -->
-    <section class="section alt" id="skills">
+    <!-- BLOG -->
+    <section class="section alt" id="blog">
       <div class="container">
-        <h2 class="section-title"><span class="mono num">02</span> Skills</h2>
-        <div class="grid skills-grid">
-          <article class="card">
-            <h3>Hardware design</h3>
-            <ul class="tags">
-              <li>KiCad</li><li>Altium</li><li>Schematic capture</li><li>4–6 layer layout</li>
-              <li>Signal integrity</li><li>DFM / DFA</li>
-            </ul>
-          </article>
-          <article class="card">
-            <h3>Embedded</h3>
-            <ul class="tags">
-              <li>C / C++</li><li>STM32</li><li>ESP32</li><li>RP2040</li><li>FreeRTOS</li>
-              <li>I²C · SPI · UART · CAN</li>
-            </ul>
-          </article>
-          <article class="card">
-            <h3>Analog &amp; power</h3>
-            <ul class="tags">
-              <li>Op-amp circuits</li><li>Active filters</li><li>Buck / boost</li><li>LDOs</li>
-              <li>Battery management</li><li>LTspice</li>
-            </ul>
-          </article>
-          <article class="card">
-            <h3>Test &amp; tools</h3>
-            <ul class="tags">
-              <li>Oscilloscope</li><li>Logic analyzer</li><li>Spectrum analyzer</li>
-              <li>Python</li><li>MATLAB</li><li>Git</li>
-            </ul>
-          </article>
-        </div>
+        <h2 class="section-title"><span class="mono num">02</span> Blog</h2>
+        <!-- Newest first. Copy blog/first-board-bring-up.html to start a new post. -->
+        <ol class="post-list">
+          <li>
+            <a class="post-item" href="blog/first-board-bring-up.html">
+              <time class="mono" datetime="2026-10-12">2026-10-12</time>
+              <span class="post-text">
+                <span class="post-title">Bringing up my first 4-layer board</span>
+                <span class="post-excerpt">Current-limited supplies, one rail at a time, and the checklist I now run before I plug anything in.</span>
+              </span>
+              <span class="post-tag mono">PCB</span>
+            </a>
+          </li>
+          <li>
+            <a class="post-item" href="#">
+              <time class="mono" datetime="2026-08-30">2026-08-30</time>
+              <span class="post-text">
+                <span class="post-title">Bit-banging I²C without losing your mind</span>
+                <span class="post-excerpt">Clock stretching, open-drain emulation, and why the logic analyzer is your best friend.</span>
+              </span>
+              <span class="post-tag mono">Embedded</span>
+            </a>
+          </li>
+          <li>
+            <a class="post-item" href="#">
+              <time class="mono" datetime="2026-06-14">2026-06-14</time>
+              <span class="post-text">
+                <span class="post-title">Measuring buck converter loop stability on a budget</span>
+                <span class="post-excerpt">Injecting a signal across a 10 Ω resistor and reading phase margin off a cheap scope.</span>
+              </span>
+              <span class="post-tag mono">Power</span>
+            </a>
+          </li>
+        </ol>
       </div>
     </section>
 
