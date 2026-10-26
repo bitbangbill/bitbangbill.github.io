@@ -1,6 +1,6 @@
 # bitbangbill.dev
 
-Static electrical engineering portfolio, hosted on GitHub Pages (free tier) at
+Static Electrical Engineering portfolio, hosted on GitHub Pages (free tier) at
 https://bitbangbill.dev. It uses plain HTML, CSS, and JS. A GitHub Actions workflow runs Jekyll to build the
 project cards and pages from `PROJECT.md` files in project repos and from `_projects/`.
 
