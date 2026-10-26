@@ -6,13 +6,13 @@
 <!doctype html>
 <html lang="en">
 <head>
-  {% include head.html title=page_title description="Electrical engineering projects: finished boards, work on the bench, and what's next." %}
+  {% include head.html title=page_title description="Electrical engineering projects: finished boards, work on the bench and what's next." %}
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
 
   <header class="pf-top">
-    <a class="brand" href="{{ '/' | relative_url }}" aria-label="BitBangBill home">{% include mark.html %} bitbangbill</a>
+    <a class="brand" href="{{ '/' | relative_url }}" aria-label="bitbangbill home">{% include mark.html %} bitbangbill</a>
     <nav aria-label="Primary">
       <a href="{{ '/#about' | relative_url }}">About</a>
       <a href="{{ '/#experience' | relative_url }}">Experience</a>
@@ -29,7 +29,7 @@
       <div>
         <p class="pf-eyebrow mono">Portfolio</p>
         <h1>Projects by {{ site.author }}</h1>
-        <p class="pf-lede">Embedded systems, controls, analog and power electronics: finished boards, work on the bench, and what's next.</p>
+        <p class="pf-lede">Embedded systems, controls, analog and power electronics: finished boards, work on the bench and what's next.</p>
       </div>
       {%- if sorted_projects.size > 0 %}
       <dl class="pf-stats">

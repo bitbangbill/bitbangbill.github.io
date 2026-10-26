@@ -5,7 +5,7 @@
 {%- comment -%} The showcase is the projects marked `featured: true`, or the first three if none are. {%- endcomment -%}
 {%- assign featured = sorted_projects | where: "featured", true -%}
 {%- if featured.size == 0 %}{% assign featured = sorted_projects %}{% endif -%}
-{%- capture page_title %}{{ site.author }} · BitBangBill{% endcapture -%}
+{%- capture page_title %}{{ site.author }} · bitbangbill{% endcapture -%}
 <!doctype html>
 <html lang="en">
 <head>
@@ -17,7 +17,7 @@
   <div class="split">
     <aside class="panel">
       <div class="panel-top">
-        <a class="brand" href="#top" aria-label="BitBangBill home">{% include mark.html %} bitbangbill</a>
+        <a class="brand" href="#top" aria-label="bitbangbill home">{% include mark.html %} bitbangbill</a>
         {% include theme-toggle.html %}
       </div>
       <h1 class="wordmark">Bit<br>Bang<br><span>Bill</span></h1>
@@ -51,7 +51,7 @@
             I made this website as a showcase for my projects and a place to keep track of my progress.
           </p>
           <p>
-            Some background: From rural top of the south New Zealand, I moved to Christchurch to follow my dream of building cool stuff!
+            Some background: from the rural Top of the South in New Zealand, I moved to Christchurch to follow my dream of building cool stuff!
           </p>
           <aside class="definition" aria-label="Dictionary definition of bitbangbill">
             <p>
@@ -97,12 +97,12 @@
           <li>
             <span class="when">Summer 2025</span>
             <h3>Engineering Intern <span>· Nexbe</span></h3>
-            <p>Summer project working with solar inverters, cloud software, and local server deployment.</p>
+            <p>Summer project working with solar inverters, cloud software and local server deployment.</p>
           </li>
           <li>
             <span class="when">2024 – 2028</span>
             <h3>Bachelor of Engineering with Honours <span>· University of Canterbury</span></h3>
-            <p>Courses include: Embedded systems, power electronics, controls, engineering design.</p>
+            <p>Courses include: embedded systems, power electronics, controls and engineering design.</p>
           </li>
           <li>
             <span class="when">2019 – Covid-19</span>
