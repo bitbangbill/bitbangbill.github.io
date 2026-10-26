@@ -3,8 +3,8 @@ title: Simple Bipolar Supply
 summary: One or two sentences for the card and the page intro.
 status: ongoing             # planned | ongoing | complete ("across the line")
 featured: true              # optional: one of the three on the home page
-tools: [KiCad, LTspice]     # optional: chips on the card
-image: images/board.jpg     # optional: card photo, path in this repo
+tools: [KiCad, LTspice]     # optional: tags on cards and the project page
+image: images/board.jpg     # optional: photo for cards and the page top, path in this repo
 # thumb: wave.svg           # or one of the site's illustrations instead
 
 specs:                      # optional: table on the project page

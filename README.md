@@ -10,21 +10,20 @@ project cards and pages from `PROJECT.md` files in project repos and from `_proj
 index.html            home page (about, project showcase, experience, contact)
 portfolio/index.html  full portfolio at /portfolio/
 404.html              custom not-found page
-assets/css/style.css  styles and theme tokens
-assets/js/main.js     theme toggle, portfolio filters, copy-email buttons
-_projects/            one Markdown file per project (see below)
 _layouts/project.html project page template: gallery viewer, updates, live commit graph
 _includes/            shared page parts (head, footer, project card, status badge)
-_includes/thumbs/     SVG card illustrations
-_config.yml           Jekyll settings
+_includes/thumbs/     SVG project illustrations
+_projects/            one Markdown file per local project (see below)
+_data/statuses.yml    project statuses, their labels and display order
+_config.yml           Jekyll settings, your name and contact emails
+assets/css/style.css  styles and theme tokens
+assets/js/main.js     theme toggle, portfolio filters, copy-email buttons
 assets/js/project.js  commit graph (GitHub API) + gallery viewer
-_data/statuses.yml    project statuses and their labels
-scripts/fetch-projects.rb  pulls PROJECT.md from tagged repos (run in CI)
-templates/project-repo/    PROJECT.md + workflow to copy into a project repo
+scripts/fetch-projects.rb    pulls PROJECT.md from tagged repos (run in CI)
+templates/project-repo/      PROJECT.md + workflow to copy into a project repo
 .github/workflows/pages.yml  builds and deploys the site
 favicon.svg           icon (adapts to light/dark)
 CNAME                 custom domain for GitHub Pages
-resume.pdf            ← add your résumé here
 ```
 
 ## Projects
@@ -75,19 +74,19 @@ workflow run in the Actions tab.
 
 A project can also be a file in `_projects/`; the file name becomes the page URL
 `/projects/<file-name>.html`. If a tagged repo has the same name, the repo's
-`PROJECT.md` replaces the file. Copy an existing file to start a new one:
+`PROJECT.md` replaces the file. Start from this example:
 
 ```markdown
 ---
 title: Synchronous Buck Converter
-date: 2025-11-20            # cards are sorted newest first by this
+date: 2025-11-20            # newest first within each status
 summary: One or two sentences for the card and page intro.
 status: ongoing             # optional: planned | ongoing | complete
 featured: true              # optional: show on the home page
-repo: bitbangbill/sync-buck-converter   # optional: Source link + commit graph
+repo: bitbangbill/sync-buck-converter   # optional: repo link + commit graph
 thumb: wave.svg             # optional: file in _includes/thumbs/
-image: assets/img/buck.jpg  # optional: photo instead of thumb
-tools: [LTspice, KiCad]     # optional: chips on the card
+image: assets/img/buck.jpg  # optional: photo instead of thumb (cards + page top)
+tools: [LTspice, KiCad]     # optional: tags on cards and the project page
 
 specs:                      # optional: table on the project page
   Input: 12 V
