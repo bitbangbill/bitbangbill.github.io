@@ -1,0 +1,80 @@
+---
+# Full portfolio at /portfolio/: every project, in status order.
+---
+{%- include sorted-projects.html -%}
+{%- capture page_title %}Portfolio · {{ site.author }}{% endcapture -%}
+<!doctype html>
+<html lang="en">
+<head>
+  {% include head.html title=page_title description="Electrical engineering projects: finished boards, work on the bench, and what's next." %}
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="pf-top">
+    <a class="brand" href="{{ '/' | relative_url }}" aria-label="BitBangBill home">{% include mark.html %} bitbangbill</a>
+    <nav aria-label="Primary">
+      <a href="{{ '/#about' | relative_url }}">About</a>
+      <a href="{{ '/#experience' | relative_url }}">Experience</a>
+      <a href="{{ '/#contact' | relative_url }}">Contact</a>
+      <a href="{{ '/portfolio/' | relative_url }}" aria-current="page">Portfolio</a>
+    </nav>
+    {% include theme-toggle.html %}
+  </header>
+
+  <main class="pf" id="main">
+    <a class="back" href="{{ '/' | relative_url }}">← Home</a>
+
+    <header class="pf-head">
+      <div>
+        <p class="pf-eyebrow mono">Portfolio</p>
+        <h1>Projects by {{ site.author }}</h1>
+        <p class="pf-lede">Embedded systems, controls, analog and power electronics: finished boards, work on the bench, and what's next.</p>
+      </div>
+      {%- if sorted_projects.size > 0 %}
+      <dl class="pf-stats">
+        {%- for s in site.data.statuses %}
+        {%- assign n = site.projects | where: "status", s.key | size %}
+        <div><dt>{{ s.label }}</dt><dd>{{ n }}</dd></div>
+        {%- endfor %}
+      </dl>
+      {%- endif %}
+    </header>
+
+    {%- if sorted_projects.size > 0 %}
+    <div class="pf-bar">
+      <div class="filters" role="group" aria-label="Filter projects by status">
+        <button class="chip is-active" type="button" data-filter="all" aria-pressed="true">All <small>{{ sorted_projects.size }}</small></button>
+        {%- for s in site.data.statuses %}
+        {%- assign n = site.projects | where: "status", s.key | size %}
+        {%- if n > 0 %}
+        <button class="chip" type="button" data-filter="{{ s.key }}" aria-pressed="false">{{ s.label }} <small>{{ n }}</small></button>
+        {%- endif %}
+        {%- endfor %}
+      </div>
+      <p class="pf-count mono" aria-live="polite">{{ sorted_projects.size }} project{% if sorted_projects.size != 1 %}s{% endif %}</p>
+    </div>
+
+    <div class="pf-grid">
+      {%- for p in sorted_projects %}
+      <article class="pf-card project"{% if p.status %} data-status="{{ p.status }}"{% endif %}>
+        <a class="pf-img" href="{{ p.url | relative_url }}" tabindex="-1" aria-hidden="true">{% include project-media.html p=p %}</a>
+        <div class="pf-body">
+          <p class="card-meta mono">{{ p.date | date: "%Y" }}{% include status.html status=p.status %}{% if p.featured %}<span class="feat">Featured</span>{% endif %}</p>
+          <h2><a href="{{ p.url | relative_url }}">{{ p.title }}</a></h2>
+          <p class="card-sum">{{ p.summary }}</p>
+          {%- if p.tools %}
+          <ul class="tools">{% for t in p.tools %}<li>{{ t }}</li>{% endfor %}</ul>
+          {%- endif %}
+        </div>
+      </article>
+      {%- endfor %}
+    </div>
+    {%- else %}
+    <p class="pf-empty">No projects yet. Check back soon.</p>
+    {%- endif %}
+
+    {% include footer.html %}
+  </main>
+</body>
+</html>

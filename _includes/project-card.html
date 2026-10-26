@@ -1,0 +1,14 @@
+{%- comment -%} Fixed-size project card for the home page showcase. Param: p. {%- endcomment -%}
+<article class="card">
+  {%- if include.p.image or include.p.thumb %}
+  <div class="card-media" aria-hidden="true">{% include project-media.html p=include.p %}</div>
+  {%- endif %}
+  <div class="card-body">
+    <p class="card-meta mono">{{ include.p.date | date: "%Y" }}{% include status.html status=include.p.status %}</p>
+    <h3><a class="card-link" href="{{ include.p.url | relative_url }}">{{ include.p.title }}</a></h3>
+    <p class="card-sum">{{ include.p.summary }}</p>
+    {%- if include.p.tools %}
+    <ul class="tools">{% for t in include.p.tools %}<li>{{ t }}</li>{% endfor %}</ul>
+    {%- endif %}
+  </div>
+</article>

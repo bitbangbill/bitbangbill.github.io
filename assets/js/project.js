@@ -1,4 +1,4 @@
-// Project pages: commit graph for the repo's main branch, and the gallery lightbox.
+// Project pages: commit graph for the repo's main branch, and the gallery viewer.
 
 // ------------------------------------------------------------
 // Commit graph
@@ -171,36 +171,118 @@
 })();
 
 // ------------------------------------------------------------
-// Gallery lightbox (falls back to opening the image if JS is off)
+// Gallery: a row of three tiles and a full viewer. Images used in updates
+// are added after the gallery images; their description links to the update.
+// Without JS the tiles are plain links to the images.
 // ------------------------------------------------------------
 (function () {
-  const links = Array.from(document.querySelectorAll(".gallery a"));
-  const dialog = document.querySelector(".lightbox");
-  if (!links.length || !dialog || !dialog.showModal) return;
+  const data = document.getElementById("gallery-data");
+  const row = document.querySelector(".gallery");
+  const dialog = document.querySelector(".viewer");
+  if (!data || !row || !dialog || !dialog.showModal) return;
 
-  const img = dialog.querySelector("img");
-  const caption = dialog.querySelector(".lightbox-caption");
-  let current = 0;
-
-  function show(i) {
-    current = (i + links.length) % links.length;
-    const link = links[current];
-    img.src = link.href;
-    img.alt = link.querySelector("img").alt;
-    caption.textContent = (current + 1) + " / " + links.length + " · " + link.querySelector("figcaption").textContent;
-  }
-
-  links.forEach(function (link, i) {
-    link.addEventListener("click", function (e) {
-      e.preventDefault();
-      show(i);
-      dialog.showModal();
+  const items = JSON.parse(data.textContent);
+  document.querySelectorAll(".updates li").forEach(function (li) {
+    const title = li.querySelector("h3").textContent;
+    const date = li.querySelector("time").textContent;
+    li.querySelectorAll(".u-body img").forEach(function (img) {
+      const i = items.length;
+      items.push({ src: img.currentSrc || img.src, name: img.alt || title, update: { id: li.id, title: title, date: date } });
+      // Clicking a photo in an update opens it in the viewer too.
+      img.classList.add("zoomable");
+      img.addEventListener("click", function () { dialog.showModal(); show(i); });
     });
   });
+  if (!items.length) return;
 
-  dialog.querySelector(".lightbox-prev").addEventListener("click", function () { show(current - 1); });
-  dialog.querySelector(".lightbox-next").addEventListener("click", function () { show(current + 1); });
-  dialog.querySelector(".lightbox-close").addEventListener("click", function () { dialog.close(); });
+  // Tiles: the first three; with more, the third opens the viewer with a count.
+  row.textContent = "";
+  items.slice(0, 3).forEach(function (it, i) {
+    const more = i === 2 && items.length > 3;
+    const li = document.createElement("li");
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "g-tile" + (more ? " more" : "");
+    const img = document.createElement("img");
+    img.src = it.src;
+    img.alt = it.name;
+    img.loading = "lazy";
+    btn.appendChild(img);
+    if (more) {
+      const over = document.createElement("span");
+      over.className = "g-over";
+      over.innerHTML = "View all <b></b>";
+      over.querySelector("b").textContent = items.length;
+      btn.appendChild(over);
+    }
+    const cap = document.createElement("span");
+    cap.className = "cap";
+    cap.textContent = more ? "+" + (items.length - 2) + " more" : it.name;
+    btn.appendChild(cap);
+    btn.addEventListener("click", function () { dialog.showModal(); show(i); });
+    li.appendChild(btn);
+    row.appendChild(li);
+  });
+
+  const stage = dialog.querySelector(".v-img");
+  const name = dialog.querySelector(".v-name");
+  const desc = dialog.querySelector(".v-desc");
+  const count = dialog.querySelector(".v-count");
+  const thumbs = dialog.querySelector(".v-thumbs");
+  const smooth = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let current = 0;
+
+  items.forEach(function (it, i) {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.setAttribute("role", "option");
+    b.setAttribute("aria-label", it.name);
+    const t = document.createElement("img");
+    t.src = it.src;
+    t.alt = "";
+    t.loading = "lazy";
+    b.appendChild(t);
+    b.addEventListener("click", function () { show(i); });
+    thumbs.appendChild(b);
+  });
+
+  function goToUpdate(id) {
+    dialog.close();
+    const li = document.getElementById(id);
+    if (!li) return;
+    li.scrollIntoView({ behavior: smooth ? "smooth" : "auto", block: "center" });
+    document.querySelectorAll(".updates li.is-target").forEach(function (x) { x.classList.remove("is-target"); });
+    li.classList.add("is-target");
+  }
+
+  function show(i) {
+    current = (i + items.length) % items.length;
+    const it = items[current];
+    stage.classList.remove("in");
+    stage.onload = function () { stage.classList.add("in"); };
+    stage.src = it.src;
+    stage.alt = it.name;
+    name.textContent = it.name;
+    count.textContent = (current + 1) + " / " + items.length;
+    desc.textContent = "";
+    if (it.update) {
+      const a = document.createElement("a");
+      a.href = "#" + it.update.id;
+      a.textContent = "Update · " + it.update.title + " · " + it.update.date;
+      a.addEventListener("click", function (e) { e.preventDefault(); goToUpdate(it.update.id); });
+      desc.appendChild(a);
+    } else {
+      desc.textContent = it.desc || "";
+    }
+    thumbs.querySelectorAll("button").forEach(function (b, j) {
+      b.setAttribute("aria-selected", String(j === current));
+      if (j === current) b.scrollIntoView({ block: "nearest" });
+    });
+  }
+
+  dialog.querySelector(".v-prev").addEventListener("click", function () { show(current - 1); });
+  dialog.querySelector(".v-next").addEventListener("click", function () { show(current + 1); });
+  dialog.querySelector(".v-close").addEventListener("click", function () { dialog.close(); });
   dialog.addEventListener("click", function (e) { if (e.target === dialog) dialog.close(); });
   dialog.addEventListener("keydown", function (e) {
     if (e.key === "ArrowLeft") show(current - 1);

@@ -1,148 +1,142 @@
+{%- comment -%}
+  Project page. The side panel holds the project's details; the content column
+  has the overview, gallery, update timeline and live commit graph.
+  Images used in updates are added to the end of the gallery by project.js.
+{%- endcomment -%}
+{%- assign has_gallery = false -%}
+{%- if page.gallery and page.gallery.size > 0 %}{% assign has_gallery = true %}{% endif -%}
+{%- for u in page.updates -%}
+  {%- if u.text contains "![" or u.text contains "<img" %}{% assign has_gallery = true %}{% endif -%}
+{%- endfor -%}
+{%- capture page_title %}{{ page.title }} · {{ site.author }}{% endcapture -%}
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ page.title }} — BitBangBill</title>
-  <meta name="description" content="{{ page.summary | escape }}">
-  <meta name="color-scheme" content="light dark">
-  <meta name="theme-color" content="#f6f7f4" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#0d1210" media="(prefers-color-scheme: dark)">
-  <link rel="canonical" href="https://bitbangbill.dev{{ page.url }}">
-  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
-
-  <meta property="og:type" content="article">
-  <meta property="og:title" content="{{ page.title | escape }}">
-  <meta property="og:url" content="https://bitbangbill.dev{{ page.url }}">
-
-  <script>
-    (function () {
-      try {
-        var t = localStorage.getItem("theme");
-        if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
-      } catch (e) {}
-    })();
-  </script>
-  <link rel="stylesheet" href="../assets/css/style.css">
-  <script src="../assets/js/main.js" defer></script>
-  <script src="../assets/js/project.js" defer></script>
+  {% include head.html title=page_title description=page.summary og_type="article" %}
+  <script src="{{ '/assets/js/project.js' | relative_url }}" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
 
-  <header class="site-header">
-    <nav class="nav container" aria-label="Primary">
-      <a class="brand" href="../index.html" aria-label="BitBangBill home">
-        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
-          <path d="M2 22h6V10h6v12h6V10h6v12h4" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
-        </svg>
-        <span>bitbang<span class="accent">bill</span></span>
-      </a>
-      <button class="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu">
-        <span></span><span></span><span></span>
-      </button>
-      <ul class="nav-links" id="nav-links">
-        <li><a href="../index.html#about">About</a></li>
-        <li><a href="../index.html#projects">Projects</a></li>
-        <li><a href="../index.html#experience">Experience</a></li>
-        <li><a href="../index.html#contact">Contact</a></li>
-        <li>
-          <button class="theme-toggle" type="button" aria-label="Theme: system" title="Theme: system">
-            <svg class="icon icon-auto" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"/></svg>
-            <svg class="icon icon-light" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-            <svg class="icon icon-dark" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
-            <span class="theme-label">Auto</span>
-          </button>
-        </li>
-      </ul>
-    </nav>
-  </header>
+  <div class="split project-page">
+    <aside class="panel">
+      <div class="panel-top">
+        <a class="brand" href="{{ '/' | relative_url }}" aria-label="BitBangBill home">{% include mark.html %} bitbangbill</a>
+        {% include theme-toggle.html %}
+      </div>
+      <a class="back" href="{{ '/portfolio/' | relative_url }}">← All projects</a>
+      <p class="card-meta pj-meta mono">{{ page.date | date: "%Y" }}{% include status.html status=page.status %}</p>
+      <h1 class="pj-title">{{ page.title }}</h1>
+      <p class="pj-sum">{{ page.summary }}</p>
+      {%- if page.specs %}
+      <table class="pj-specs">
+        <tbody>
+          {%- for spec in page.specs %}
+          <tr><th scope="row">{{ spec[0] }}</th><td>{{ spec[1] }}</td></tr>
+          {%- endfor %}
+        </tbody>
+      </table>
+      {%- endif %}
+      <nav class="panel-nav" aria-label="On this page">
+        <a href="#overview">Overview</a>
+        {%- if has_gallery %}
+        <a href="#gallery">Gallery</a>
+        {%- endif %}
+        {%- if page.updates %}
+        <a href="#updates">Updates</a>
+        {%- endif %}
+        {%- if page.repo %}
+        <a href="#commits">Commits</a>
+        {%- endif %}
+      </nav>
+      {%- if page.repo %}
+      <a class="repo mono" href="https://github.com/{{ page.repo }}" target="_blank" rel="noopener">{{ page.repo }} ↗</a>
+      {%- endif %}
+    </aside>
 
-  <main id="main">
-    <div class="project-page container">
-      <a class="post-back mono" href="../index.html#projects">← All projects</a>
+    <main class="content" id="main">
+      {%- if page.image or page.thumb %}
+      <div class="pj-hero" aria-hidden="true">{% include project-media.html p=page %}</div>
+      {%- endif %}
 
-      <header class="post-header">
-        <h1>{{ page.title }}</h1>
-        <p class="mono">{{ page.date | date: "%Y" }}{% include status.html status=page.status %}</p>
-        <p class="lede">{{ page.summary }}</p>
-      </header>
-
-      <div class="project-layout">
-        <div class="project-main">
-          <section aria-labelledby="overview">
-            <h2 class="block-title" id="overview">Overview</h2>
-            {{ content }}
-            {%- if page.specs %}
-            <table class="specs">
-              <tbody>
-                {%- for spec in page.specs %}
-                <tr><th scope="row">{{ spec[0] }}</th><td>{{ spec[1] }}</td></tr>
-                {%- endfor %}
-              </tbody>
-            </table>
-            {%- endif %}
-          </section>
-          {%- if page.gallery %}
-
-          <section aria-labelledby="gallery">
-            <h2 class="block-title" id="gallery">Gallery</h2>
-            <ul class="gallery">
-              {%- for img in page.gallery %}
-              <li><a href="../{{ img.src }}"><figure><img src="../{{ img.src }}" alt="{{ img.caption | escape }}" loading="lazy" width="800" height="600"><figcaption>{{ img.caption }}</figcaption></figure></a></li>
-              {%- endfor %}
-            </ul>
-          </section>
-          {%- endif %}
-          {%- if page.updates %}
-
-          <section aria-labelledby="updates">
-            <h2 class="block-title" id="updates">Updates</h2>
-            <ol class="updates">
-              {%- for u in page.updates %}
-              <li>
-                <time class="mono" datetime="{{ u.date | date: '%Y-%m-%d' }}{% if u.time %}T{{ u.time }}{% endif %}">{{ u.date | date: "%Y-%m-%d" }}{% if u.time %} {{ u.time }}{% endif %}</time>
-                <h3>{{ u.title }}</h3>
-                <div class="update-body">{{ u.text | markdownify }}</div>
-              </li>
-              {%- endfor %}
-            </ol>
-          </section>
+      <section id="overview">
+        <h2 class="sec">Overview</h2>
+        <div class="prose">
+          {{ content }}
+          {%- if page.tools %}
+          <ul class="tools">{% for t in page.tools %}<li>{{ t }}</li>{% endfor %}</ul>
           {%- endif %}
         </div>
-        {%- if page.repo %}
+      </section>
+      {%- if has_gallery %}
 
-        <!-- Commits on main, fetched from the GitHub API. -->
-        <aside class="card commits" data-repo="{{ page.repo }}" data-branch="main" aria-labelledby="commits-title">
+      <section id="gallery">
+        <h2 class="sec">Gallery</h2>
+        <!-- Without JS these are plain links; project.js rebuilds the row and opens the viewer. -->
+        <ul class="gallery">
+          {%- for img in page.gallery limit: 3 %}
+          {%- capture src %}{% include src.html src=img.src %}{% endcapture %}
+          <li><a class="g-tile" href="{{ src | strip }}"><img src="{{ src | strip }}" alt="{{ img.caption | escape }}" loading="lazy"><span class="cap">{{ img.caption }}</span></a></li>
+          {%- endfor %}
+        </ul>
+        <script type="application/json" id="gallery-data">[
+          {%- for img in page.gallery %}
+          {%- capture src %}{% include src.html src=img.src %}{% endcapture %}
+          {"src": {{ src | strip | jsonify }}, "name": {{ img.caption | default: "" | jsonify }}, "desc": {{ img.description | default: "" | jsonify }}}{% unless forloop.last %},{% endunless %}
+          {%- endfor %}
+        ]</script>
+      </section>
+      {%- endif %}
+      {%- if page.updates %}
+
+      <section id="updates">
+        <h2 class="sec">Updates</h2>
+        <ol class="updates">
+          {%- for u in page.updates %}
+          {%- assign day = u.date | date: "%Y-%m-%d" %}
+          <li id="update-{{ day }}-{{ forloop.index }}">
+            <time datetime="{{ day }}{% if u.time %}T{{ u.time }}{% endif %}">{{ day }}{% if u.time %} {{ u.time }}{% endif %}</time>
+            <h3>{{ u.title }}</h3>
+            <div class="u-body">{{ u.text | markdownify }}</div>
+          </li>
+          {%- endfor %}
+        </ol>
+      </section>
+      {%- endif %}
+      {%- if page.repo %}
+
+      <!-- Commits on main, fetched from the GitHub API by project.js. -->
+      <section id="commits">
+        <h2 class="sec">Commits</h2>
+        <div class="commits" data-repo="{{ page.repo }}" data-branch="main">
           <div class="commits-head">
-            <h2 id="commits-title">Commits on main</h2>
-            <a class="mono" href="https://github.com/{{ page.repo }}" target="_blank" rel="noopener">{{ page.repo }}</a>
+            <span>Commits on main</span>
+            <a href="https://github.com/{{ page.repo }}" target="_blank" rel="noopener">{{ page.repo }}</a>
           </div>
           <p class="commit-status">Loading commits…</p>
           <div class="commit-list"></div>
-          <a class="commits-foot" href="https://github.com/{{ page.repo }}/commits/main" target="_blank" rel="noopener">View all commits on GitHub →</a>
-        </aside>
-        {%- endif %}
-      </div>
-    </div>
-  </main>
+          <a class="commits-foot mono" href="https://github.com/{{ page.repo }}/commits/main" target="_blank" rel="noopener">View all commits on GitHub →</a>
+        </div>
+      </section>
+      {%- endif %}
 
-  <dialog class="lightbox" aria-label="Gallery image">
-    <img src="" alt="">
-    <div class="lightbox-bar">
-      <button class="lightbox-prev" type="button">← Prev</button>
-      <span class="lightbox-caption"></span>
-      <button class="lightbox-next" type="button">Next →</button>
-      <button class="lightbox-close" type="button">Close</button>
+      {% include footer.html %}
+    </main>
+  </div>
+
+  <dialog class="viewer" aria-label="Gallery">
+    <div class="v-stage">
+      <img class="v-img" alt="">
+      <button class="v-nav v-prev" type="button" aria-label="Previous image">←</button>
+      <button class="v-nav v-next" type="button" aria-label="Next image">→</button>
+      <p class="v-count mono"></p>
     </div>
+    <aside class="v-side">
+      <div class="v-head"><p class="v-label mono">Gallery</p><button class="v-close" type="button">Close ✕</button></div>
+      <h2 class="v-name"></h2>
+      <p class="v-desc"></p>
+      <div class="v-thumbs" role="listbox" aria-label="Choose image"></div>
+    </aside>
   </dialog>
-
-  <footer class="site-footer">
-    <div class="container mono">
-      <span>© <span id="year">2026</span> bitbangbill.dev</span>
-      <span class="muted">Hosted on GitHub Pages</span>
-      <span class="muted site-credit">This website was designed using <a href="https://claude.ai" target="_blank" rel="noopener">Claude</a> by Anthropic.</span>
-    </div>
-  </footer>
 </body>
 </html>

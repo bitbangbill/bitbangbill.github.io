@@ -1,0 +1,6 @@
+{%- comment -%} A project's photo (image:) or illustration (thumb:). Param: p. {%- endcomment -%}
+{%- if include.p.image -%}
+<img src="{% include src.html src=include.p.image %}" alt="" loading="lazy">
+{%- elsif include.p.thumb -%}
+{% include thumbs/{{ include.p.thumb }} %}
+{%- endif -%}

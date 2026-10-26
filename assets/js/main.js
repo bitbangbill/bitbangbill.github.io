@@ -2,10 +2,8 @@
 // "light"/"dark" are explicit overrides stored in localStorage.
 (function () {
   const root = document.documentElement;
-  const toggle = document.querySelector(".theme-toggle");
-  const label = toggle && toggle.querySelector(".theme-label");
+  const toggles = document.querySelectorAll(".theme-toggle");
   const order = ["auto", "light", "dark"];
-  const names = { auto: "Auto", light: "Light", dark: "Dark" };
 
   function getSaved() {
     try {
@@ -25,57 +23,25 @@
       else localStorage.setItem("theme", mode);
     } catch (e) {}
 
-    if (toggle) {
-      toggle.dataset.mode = mode;
-      toggle.setAttribute("aria-label", "Theme: " + names[mode] + " (click to change)");
-      toggle.title = "Theme: " + names[mode];
-      if (label) label.textContent = names[mode];
-    }
+    toggles.forEach(function (t) {
+      t.textContent = mode;
+      t.setAttribute("aria-label", "Theme: " + mode + " (click to change)");
+    });
   }
 
   apply(getSaved());
-
-  if (toggle) {
-    toggle.addEventListener("click", function () {
-      const next = order[(order.indexOf(getSaved()) + 1) % order.length];
-      apply(next);
+  toggles.forEach(function (t) {
+    t.addEventListener("click", function () {
+      apply(order[(order.indexOf(getSaved()) + 1) % order.length]);
     });
-  }
-})();
-
-// Mobile nav
-(function () {
-  const btn = document.querySelector(".nav-toggle");
-  const links = document.getElementById("nav-links");
-  if (!btn || !links) return;
-
-  function setOpen(open) {
-    btn.setAttribute("aria-expanded", String(open));
-    btn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
-    links.classList.toggle("is-open", open);
-  }
-
-  btn.addEventListener("click", function () {
-    setOpen(btn.getAttribute("aria-expanded") !== "true");
-  });
-  links.addEventListener("click", function (e) {
-    if (e.target.closest("a")) setOpen(false);
-  });
-  document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape") setOpen(false);
   });
 })();
 
-// Footer year
-(function () {
-  const el = document.getElementById("year");
-  if (el) el.textContent = new Date().getFullYear();
-})();
-
-// Project status filters
+// Portfolio status filters
 (function () {
   const chips = document.querySelectorAll(".chip[data-filter]");
-  const projects = document.querySelectorAll(".projects-grid .project");
+  const projects = document.querySelectorAll(".project");
+  const count = document.querySelector(".pf-count");
 
   chips.forEach(function (chip) {
     chip.addEventListener("click", function () {
@@ -85,9 +51,50 @@
         c.classList.toggle("is-active", active);
         c.setAttribute("aria-pressed", String(active));
       });
+      let shown = 0;
       projects.forEach(function (p) {
         p.hidden = filter !== "all" && p.dataset.status !== filter;
+        if (!p.hidden) shown++;
+      });
+      if (count) count.textContent = shown + " project" + (shown === 1 ? "" : "s");
+    });
+  });
+})();
+
+// Copy-to-clipboard buttons (falls back to execCommand outside secure contexts)
+(function () {
+  function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(text);
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    ta.setAttribute("readonly", "");
+    ta.style.position = "fixed";
+    ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand("copy"); } finally { document.body.removeChild(ta); }
+    return Promise.resolve();
+  }
+
+  document.querySelectorAll(".copy[data-copy]").forEach(function (btn) {
+    const label = btn.querySelector("span");
+    let timer;
+    btn.addEventListener("click", function () {
+      copyText(btn.dataset.copy).then(function () {
+        btn.classList.add("done");
+        label.textContent = "Copied";
+        clearTimeout(timer);
+        timer = setTimeout(function () {
+          btn.classList.remove("done");
+          label.textContent = "Copy";
+        }, 1600);
       });
     });
   });
+})();
+
+// Footer year
+(function () {
+  const el = document.getElementById("year");
+  if (el) el.textContent = new Date().getFullYear();
 })();

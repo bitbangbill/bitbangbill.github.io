@@ -1,7 +1,8 @@
-# Project statuses in filter order. Keys match `status:` in project front matter.
-- key: planned
-  label: Planned
-- key: ongoing
-  label: Ongoing
+# Project statuses in display order: projects are listed in this order
+# everywhere, newest first within each. Keys match `status:` in front matter.
 - key: complete
   label: Across the line
+- key: ongoing
+  label: Ongoing
+- key: planned
+  label: Planned

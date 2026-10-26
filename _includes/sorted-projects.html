@@ -1,0 +1,11 @@
+{%- comment -%}
+  Sets sorted_projects: projects in the order of _data/statuses.yml (across the
+  line, ongoing, planned), newest first within each, then any without a status.
+{%- endcomment -%}
+{%- assign sorted_projects = "" | split: "" -%}
+{%- for s in site.data.statuses -%}
+  {%- assign group = site.projects | where: "status", s.key | sort: "date" | reverse -%}
+  {%- assign sorted_projects = sorted_projects | concat: group -%}
+{%- endfor -%}
+{%- assign unsorted = site.projects | where_exp: "p", "p.status == nil" | sort: "date" | reverse -%}
+{%- assign sorted_projects = sorted_projects | concat: unsorted -%}

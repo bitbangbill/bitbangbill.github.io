@@ -1,0 +1,25 @@
+{%- comment -%} Shared <head> contents. Params: title, description, og_type. {%- endcomment -%}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ include.title }}</title>
+<meta name="description" content="{{ include.description | strip_html | escape }}">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f6f5f9" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#131119" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://bitbangbill.dev{{ page.url }}">
+<link rel="icon" href="{{ '/favicon.svg' | relative_url }}" type="image/svg+xml">
+<meta property="og:type" content="{{ include.og_type | default: 'website' }}">
+<meta property="og:title" content="{{ include.title | escape }}">
+<meta property="og:description" content="{{ include.description | strip_html | escape }}">
+<meta property="og:url" content="https://bitbangbill.dev{{ page.url }}">
+<!-- Apply the saved theme before first paint to avoid a flash. -->
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem("theme");
+      if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+    } catch (e) {}
+  })();
+</script>
+<link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+<script src="{{ '/assets/js/main.js' | relative_url }}" defer></script>

@@ -1,0 +1,12 @@
+{%- comment -%}
+  Site URL for an image path from front matter: "assets/x.jpg" and "/assets/x.jpg"
+  become "/assets/x.jpg"; full URLs pass through.
+{%- endcomment -%}
+{%- assign s = include.src | strip -%}
+{%- if s contains "://" or s contains "data:" -%}
+{{ s }}
+{%- else -%}
+{%- assign c = s | slice: 0 -%}
+{%- if c != "/" %}{% assign s = s | prepend: "/" %}{% endif -%}
+{{ s | relative_url }}
+{%- endif -%}

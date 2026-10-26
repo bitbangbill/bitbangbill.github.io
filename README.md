@@ -7,15 +7,17 @@ project cards and pages from `PROJECT.md` files in project repos and from `_proj
 ## Structure
 
 ```
-index.html            main page
+index.html            home page (about, project showcase, experience, contact)
+portfolio/index.html  full portfolio at /portfolio/
 404.html              custom not-found page
 assets/css/style.css  styles and theme tokens
-assets/js/main.js     theme toggle, mobile nav
+assets/js/main.js     theme toggle, portfolio filters, copy-email buttons
 _projects/            one Markdown file per project (see below)
-_layouts/project.html project page template: gallery, updates, live commit graph
+_layouts/project.html project page template: gallery viewer, updates, live commit graph
+_includes/            shared page parts (head, footer, project card, status badge)
 _includes/thumbs/     SVG card illustrations
 _config.yml           Jekyll settings
-assets/js/project.js  commit graph (GitHub API) + gallery lightbox
+assets/js/project.js  commit graph (GitHub API) + gallery viewer
 _data/statuses.yml    project statuses and their labels
 scripts/fetch-projects.rb  pulls PROJECT.md from tagged repos (run in CI)
 templates/project-repo/    PROJECT.md + workflow to copy into a project repo
@@ -44,7 +46,7 @@ From then on:
 
 - **Project details:** the front matter at the top of `PROJECT.md` (between the `---`
   lines) takes the same fields as a local project file below: `title`, `summary`,
-  `status`, `tools`, `image` or `thumb`, `specs`, `gallery`. `repo` and `date` are
+  `status`, `featured`, `tools`, `image` or `thumb`, `specs`, `gallery`. `repo` and `date` are
   filled in automatically.
 - **New update:** add a `## Title` section under `# Updates` in `PROJECT.md` and push
   to `updates`. The site rebuilds in about a minute. Each section is one box on the
@@ -53,7 +55,14 @@ From then on:
   `## 2026-10-12 — Title` or `## 2026-10-12 14:30 — Title`. Images can use paths
   relative to the project repo.
 - **Status:** set `status:` in the front matter to `planned`, `ongoing` or `complete`
-  (shown as *Across the line*). Cards show it as a badge and can be filtered by it.
+  (shown as *Across the line*). Projects are listed in that order (across the line,
+  ongoing, planned), newest first within each, and can be filtered by status on
+  `/portfolio/`.
+- **Showcase:** add `featured: true` to the three projects you want on the home page.
+  If none are featured, the first three are shown.
+- **Gallery:** `gallery:` entries take `src`, `caption` and an optional `description`.
+  Images used in updates are added to the end of the gallery automatically, linking
+  back to their update.
 - **Add/remove a project:** add or remove the `bitbangbill-site` topic. Topic changes
   don't send an event, so they show up on the hourly build, or straight away if you
   click **Run workflow** under Actions → *Build site* (works from the GitHub app too).
@@ -74,6 +83,7 @@ title: Synchronous Buck Converter
 date: 2025-11-20            # cards are sorted newest first by this
 summary: One or two sentences for the card and page intro.
 status: ongoing             # optional: planned | ongoing | complete
+featured: true              # optional: show on the home page
 repo: bitbangbill/sync-buck-converter   # optional: Source link + commit graph
 thumb: wave.svg             # optional: file in _includes/thumbs/
 image: assets/img/buck.jpg  # optional: photo instead of thumb
@@ -86,6 +96,7 @@ specs:                      # optional: table on the project page
 gallery:                    # optional
   - src: assets/img/sync-buck-converter/board.jpg
     caption: Board under test
+    description: Loop gain measured with an injection transformer.  # optional
 
 updates:                    # optional, newest first
   - date: 2025-11-20
@@ -102,11 +113,13 @@ Quote a value if it contains `: ` or starts with a special character, e.g.
 ## Theme
 
 The site follows the visitor's OS light/dark setting automatically through the CSS
-`prefers-color-scheme` media query. The toggle in the nav cycles **Auto → Light → Dark**,
+`prefers-color-scheme` media query. The toggle at the top cycles **auto → light → dark**,
 and the choice is saved in `localStorage`. Everything runs in the browser, so it works
 on the free tier.
 
-Colors are CSS variables at the top of `assets/css/style.css`.
+Colors are CSS variables at the top of `assets/css/style.css` (the violet palette).
+Your name and both contact email addresses are set in `_config.yml` (`author`,
+`email`, `email_alt`).
 
 ## Deploy
 
