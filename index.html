@@ -1,0 +1,221 @@
+---
+# Jekyll front matter: lets this page use {% %} templates.
+---
+{%- assign projects = site.projects | sort: "date" | reverse %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BitBangBill — Electrical Engineering Portfolio</title>
+  <meta name="description" content="Electrical engineering portfolio: embedded systems, PCB design, analog and power electronics.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f6f7f4" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0d1210" media="(prefers-color-scheme: dark)">
+  <link rel="canonical" href="https://bitbangbill.dev/">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="BitBangBill — Electrical Engineering Portfolio">
+  <meta property="og:description" content="Embedded systems, controls, analog and power electronics.">
+  <meta property="og:url" content="https://bitbangbill.dev/">
+
+  <!-- Apply the saved/system theme before first paint to avoid a flash. -->
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("theme");
+        if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script src="assets/js/main.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <nav class="nav container" aria-label="Primary">
+      <a class="brand" href="#top" aria-label="BitBangBill home">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M2 22h6V10h6v12h6V10h6v12h4" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+        </svg>
+        <span>bitbang<span class="accent">bill</span></span>
+      </a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#about">About</a></li>
+        {%- if projects.size > 0 %}
+        <li><a href="#projects">Projects</a></li>
+        {%- endif %}
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li>
+          <button class="theme-toggle" type="button" aria-label="Theme: system" title="Theme: system">
+            <svg class="icon icon-auto" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"/></svg>
+            <svg class="icon icon-light" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            <svg class="icon icon-dark" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+            <span class="theme-label">Auto</span>
+          </button>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main">
+    <!-- HERO -->
+    <section class="hero" id="top">
+      <div class="container hero-inner">
+        <p class="eyebrow mono">// electrical engineer</p>
+        <h1>I design circuits that<br><span class="accent">connect to the real world.</span></h1>
+        <p class="lede">
+          Embedded systems, controls, analog and power electronics.
+        </p>
+        <div class="cta-row">
+          {%- if projects.size > 0 %}
+          <a class="btn btn-primary" href="#projects">View projects</a>
+          {%- endif %}
+          <a class="btn btn-ghost" href="resume.pdf">Download résumé</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="section" id="about">
+      <div class="container two-col">
+        <div>
+          <h2 class="section-title">About</h2>
+        </div>
+        <div class="prose">
+          <p>
+            Hi, I'm Will! I'm an electrical engineering student who likes working where hardware and software meet. 
+            I made this website as a showcase for my projects and a place to keep track of my progress.
+          </p>
+          <p>
+            Some background: From rural top of the south New Zealand, I moved to Christchurch to follow my dream of building cool stuff! 
+          </p>
+          <aside class="definition" aria-label="Dictionary definition of bitbangbill">
+            <p class="def-head">
+              <dfn>bitbangbill</dfn>
+              <span class="mono def-pron">/ˈbɪt.bæŋ.bɪl/</span>
+              <span class="def-pos">noun</span>
+            </p>
+            <ol class="def-senses">
+              <li>
+                Will; an electrical engineering student who makes circuits talk to the real world.
+              </li>
+            </ol>
+            <p class="def-etym">
+              <span class="mono">origin</span>
+              From <em>bit-bang</em> (to run a serial protocol by toggling GPIO pins in software), an ohmage
+              to one of my first projects at uni, + <em>Bill</em>, from <em>Billtick</em>,
+              a nickname coined by Dad.
+            </p>
+          </aside>
+          <ul class="facts mono">
+            <li><span>location</span> Christchurch, NZ</li>
+            <li><span>focus</span> Embedded · Controls · Electronics</li>
+            <li><span>status</span> <span class="status-dot" aria-hidden="true"></span> Open to opportunities</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- PROJECTS (hidden when there are none) -->
+    {%- if projects.size > 0 %}
+    <section class="section" id="projects">
+      <div class="container">
+        <h2 class="section-title">Projects</h2>
+        <!-- Cards are generated from the files in _projects/ (and repos tagged
+             bitbangbill-site, fetched in CI), newest first. -->
+        {%- assign with_status = projects | where_exp: "p", "p.status" %}
+        {%- if with_status.size > 0 %}
+        <div class="filters" role="group" aria-label="Filter projects by status">
+          <button class="chip is-active" type="button" data-filter="all" aria-pressed="true">All <span class="mono">{{ projects.size }}</span></button>
+          {%- for s in site.data.statuses %}
+          {%- assign n = projects | where: "status", s.key | size %}
+          {%- if n > 0 %}
+          <button class="chip" type="button" data-filter="{{ s.key }}" aria-pressed="false">{{ s.label }} <span class="mono">{{ n }}</span></button>
+          {%- endif %}
+          {%- endfor %}
+        </div>
+        {%- endif %}
+        <div class="grid projects-grid">
+          {%- for p in projects %}
+          <article class="card project"{% if p.status %} data-status="{{ p.status }}"{% endif %}>
+            {%- if p.image %}
+            <div class="project-media" aria-hidden="true"><img src="{{ p.image }}" alt="" loading="lazy"></div>
+            {%- elsif p.thumb %}
+            <div class="project-media" aria-hidden="true">{% include thumbs/{{ p.thumb }} %}</div>
+            {%- endif %}
+            <div class="project-body">
+              <p class="mono meta">{{ p.date | date: "%Y" }}{% include status.html status=p.status %}</p>
+              <h3><a class="card-link" href="{{ p.url | remove_first: '/' }}">{{ p.title }}</a></h3>
+              <p>{{ p.summary }}</p>
+              {%- if p.tools %}
+              <ul class="tags small">{% for t in p.tools %}<li>{{ t }}</li>{% endfor %}</ul>
+              {%- endif %}
+              {%- if p.repo %}
+              <div class="links">
+                <a href="https://github.com/{{ p.repo }}" target="_blank" rel="noopener">Source</a>
+              </div>
+              {%- endif %}
+            </div>
+          </article>
+          {%- endfor %}
+        </div>
+      </div>
+    </section>
+    {%- endif %}
+
+    <!-- EXPERIENCE -->
+    <section class="section alt" id="experience">
+      <div class="container">
+        <h2 class="section-title">Experience</h2>
+        <ol class="timeline">
+          <li>
+            <p class="mono meta">Summer 2025</p>
+            <h3>Engineering Intern · <span class="muted">Nexbe</span></h3>
+            <p>Summer project working with solar inverters, cloud software, and local server deployment.</p>
+          </li>
+          <li>
+            <p class="mono meta">2024 - 2028</p>
+            <h3>Bachelor of Engineering with Honours · <span class="muted">University of Canterbury</span></h3>
+            <p>Courses include: Embedded systems, power electronics, controls, engineering design.</p>
+          </li>
+          <li>
+            <p class="mono meta">2019 - Covid-19</p>
+            <h3> Electronic Repair Assistant · <span class="muted">Rangi's Repairs</span></h3>
+            <p>A short work experience placement where I got my hands dirty helping fix stuff.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="section" id="contact">
+      <div class="container contact">
+        <h2 class="section-title">Contact</h2>
+        <p class="lede">Have a board to bring up or a role to fill? I'd like to hear about it.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="mailto:contact@bitbangbill.dev">contact@bitbangbill.dev</a>
+          <a class="btn btn-ghost" href="https://github.com/bitbangbill" target="_blank" rel="noopener">GitHub</a>
+          <a class="btn btn-ghost" href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container mono">
+      <span>© <span id="year">2026</span> bitbangbill.dev</span>
+      <span class="muted">Hosted on GitHub Pages</span>
+      <span class="muted site-credit">This website was designed using <a href="https://claude.ai" target="_blank" rel="noopener">Claude</a> by Anthropic.</span>
+    </div>
+  </footer>
+</body>
+</html>

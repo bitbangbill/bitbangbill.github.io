@@ -1,0 +1,24 @@
+# Copy to .github/workflows/ in a project repo. Each push to `updates` tells
+# bitbangbill.dev to rebuild with this repo's PROJECT.md.
+#
+# Needs a repo secret SITE_TOKEN: a fine-grained token with access to
+# bitbangbill/bitbangbill.github.io only, permission Contents: Read and write.
+name: Update website
+
+on:
+  push:
+    branches: [updates]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger site build
+        run: |
+          curl -fsS -X POST \
+            -H "Authorization: Bearer $SITE_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/bitbangbill/bitbangbill.github.io/dispatches \
+            -d '{"event_type":"project-updated","client_payload":{"repo":"${{ github.repository }}"}}'
+        env:
+          SITE_TOKEN: ${{ secrets.SITE_TOKEN }}

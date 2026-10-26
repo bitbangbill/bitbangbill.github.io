@@ -1,0 +1,7 @@
+# Project statuses in filter order. Keys match `status:` in project front matter.
+- key: planned
+  label: Planned
+- key: ongoing
+  label: Ongoing
+- key: complete
+  label: Across the line

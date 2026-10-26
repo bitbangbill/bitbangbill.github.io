@@ -1,0 +1,4 @@
+{%- if include.status -%}
+{%- assign s = site.data.statuses | where: "key", include.status | first -%}
+{%- if s %} <span class="status-badge status-{{ s.key }}">{{ s.label }}</span>{% endif -%}
+{%- endif -%}

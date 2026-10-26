@@ -1,0 +1,9 @@
+# Jekyll local build output (GitHub Pages builds its own)
+_site/
+.jekyll-cache/
+.jekyll-metadata
+.sass-cache/
+
+# Written by scripts/fetch-projects.rb (CI fetches them on every build)
+_projects/remote/
+assets/img/projects/

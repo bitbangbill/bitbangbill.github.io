@@ -1,0 +1,50 @@
+# Builds and deploys the site. Requires Settings → Pages → Source: GitHub Actions.
+#
+# Runs on push to main, when a project repo pushes to its `updates` branch
+# (templates/project-repo/.github/workflows/notify-site.yml sends the event),
+# hourly to pick up topic changes, and from the Actions tab ("Run workflow").
+name: Build site
+
+on:
+  push:
+    branches: [main]
+  repository_dispatch:
+    types: [project-updated]
+  schedule:
+    - cron: "17 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+      - name: Fetch projects tagged bitbangbill-site
+        run: ruby scripts/fetch-projects.rb
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      - uses: actions/configure-pages@v5
+      - uses: actions/jekyll-build-pages@v1
+      - uses: actions/upload-pages-artifact@v3
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,17 @@
+# Jekyll config. CI builds the site: see .github/workflows/pages.yml.
+
+# Each file in _projects/ becomes a card on the home page and a page at
+# /projects/<file-name>.html.
+collections:
+  projects:
+    output: true
+    permalink: /projects/:name.html
+
+defaults:
+  - scope: { type: projects }
+    values: { layout: project }
+
+exclude:
+  - README.md
+  - scripts
+  - templates
