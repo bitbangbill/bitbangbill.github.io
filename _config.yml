@@ -11,6 +11,10 @@ collections:
     output: true
     permalink: /projects/:name.html
 
+# No auto-generated excerpts: pages use `summary`, and fetched projects wrap
+# their body in {% raw %}, which Jekyll's excerpt splitter warns about.
+excerpt_separator: ""
+
 defaults:
   - scope: { type: projects }
     values: { layout: project }
